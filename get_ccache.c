@@ -30,20 +30,18 @@ int main() {
         fprintf(stderr, "Ошибка при разборе имени пользователя: %s\n", krb5_get_error_message(NULL, retval));
         return 1;
     }
-	username="voropaevdmtr@SMB.BASEALT.RU";
 	printf("username: %s\n", username);
     krb5_ccache ccache;
-    retval = krb5_cc_cache_match(context, client, &ccache);
 	fprintf(stderr, "========================PRINTF_1===================\n");
+    retval = krb5_cc_cache_match(context, client, &ccache);
     if (retval != 0) {
         krb5_free_context(context);
-		fprintf(stderr, "========================PRINTF_2===================\n");
-        //krb5_free_default_realm(context, username);
-		fprintf(stderr, "========================PRINTF_3===================\n");
-       // krb5_free_principal(context, client);
+        krb5_free_default_realm(context, username);
+        krb5_free_principal(context, client);
         fprintf(stderr, "Ошибка при получении кэша учетных данных: %s\n", krb5_get_error_message(NULL, retval));
         return 1;
     }
+	fprintf(stderr, "========================PRINTF_2===================\n");
     printf("Кэш учетных данных успешно получен из keyring.\n");
 
     krb5_free_context(context);
